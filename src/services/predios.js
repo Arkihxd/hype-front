@@ -6,10 +6,10 @@ export default {
     },
 
     store:(predio) =>{
-        return http.put('predios/create', predio)
+        return http.put('predios/create', predio);
     },
 
     delete:(predio) =>{
-        return http.delete(`predios/delete/${predio.id}`)
+        return http.delete(`predios/delete/${predio.id}`);
     }
 }
