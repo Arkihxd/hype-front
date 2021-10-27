@@ -3,7 +3,7 @@
     <div id="text-banner" class="text-center">
       <h1>Desafio Hype <span class="fa fa-building"></span></h1>
       <br />
-      <h2 class="text-secondary">Prédios</h2>
+      <h2 class="text-secondary">Apartamentos</h2>
     </div>
   </div>
   <div id="main">
@@ -12,62 +12,62 @@
         <div class="col-md">
           <div class="card">
             <div class="card-body">
-            <h6 class="text-secondary">Cadastre um novo prédio</h6>
+            <h6 class="text-secondary">Cadastre um novo apartamento</h6>
               <form>
                 <div class="form-group">
-                  <label for="nome">Nome</label>
+                  <label for="codigo">Codigo</label>
                   <input
                     type="text"
                     class="form-control"
-                    id="nome"
-                    placeholder="Hype Tower"
+                    id="codigo"
+                    placeholder="0021A"
                   />
                 </div>
                  <div class="form-group">
-                  <label for="sigla">Sigla</label>
+                  <label for="quartos">Numero de quartos</label>
                   <input
-                    type="text"
+                    type="number"
                     class="form-control"
-                    id="sigla"
-                    placeholder="ZP50"
+                    id="quartos"
+                    placeholder="2"
                   />
                 </div>
                  <div class="form-group">
-                  <label for="endereco">Endereço</label>
+                  <label for="banheiros">Numero de banheiros</label>
                   <input
-                    type="text"
+                    type="number"
                     class="form-control"
-                    id="endereco"
-                    placeholder="Rua Hype nº 123"
+                    id="banheiros"
+                    placeholder="1"
                   />
                 </div>
                  <div class="form-group">
-                  <label for="cidade">Cidade</label>
+                  <label for="suites">Quantidade de suites</label>
                   <input
-                    type="text"
+                    type="number"
                     class="form-control"
-                    id="cidade"
-                    placeholder="Curitiba"
+                    id="suites"
+                    placeholder="1"
                   />
                 </div>
                 <div class="form-group">
-                  <label for="cidade">Cidade</label>
+                  <label for="area">Area total em (m2)</label>
                   <input
-                    type="text"
+                    type="number"
                     class="form-control"
-                    id="cidade"
-                    placeholder="Curitiba"
+                    id="area"
+                    placeholder="45"
                   />
                 </div>
                 <div class="form-group">
-                  <label for="estado">Estado</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="estado"
-                    placeholder="PR"
-                    maxlength="2"
-                  />
+                    <label for="exampleFormControlSelect1">Selecione o Prédio</label>
+                    <select class="form-control" id="exampleFormControlSelect1">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
                 </div>
                 <br/>
                 <button type="submit" class="btn btn-primary">Criar</button>
@@ -78,7 +78,7 @@
         <div class="col-md">
           <div class="card">
             <div class="card-body">
-             <h6 class="text-secondary">Prédios disponíveis</h6>
+             <h6 class="text-secondary">Apartamentos disponíveis</h6>
               <table class="table">
                 <thead>
                   <tr>
@@ -137,3 +137,4 @@ export default {
   padding-bottom: 30px;
 }
 </style>
+
