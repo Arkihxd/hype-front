@@ -3,7 +3,7 @@
     <div id="text-banner" class="text-center">
       <h1>Desafio Hype <span class="fa fa-building"></span></h1>
       <br />
-      <h2 class="text-secondary">Apartamentos</h2>
+      <h2 class="text-secondary">Prédios</h2>
     </div>
   </div>
   <div id="main">
@@ -12,62 +12,62 @@
         <div class="col-md">
           <div class="card">
             <div class="card-body">
-            <h6 class="text-secondary">Cadastre um novo apartamento</h6>
+            <h6 class="text-secondary">Cadastre um novo prédio</h6>
               <form>
                 <div class="form-group">
-                  <label for="codigo">Código</label>
+                  <label for="nome">Nome</label>
                   <input
                     type="text"
                     class="form-control"
-                    id="codigo"
-                    placeholder="0021A"
+                    id="nome"
+                    placeholder="Hype Tower"
                   />
                 </div>
                  <div class="form-group">
-                  <label for="quartos">Número de quartos</label>
+                  <label for="sigla">Sigla</label>
                   <input
-                    type="number"
+                    type="text"
                     class="form-control"
-                    id="quartos"
-                    placeholder="2"
+                    id="sigla"
+                    placeholder="ZP50"
                   />
                 </div>
                  <div class="form-group">
-                  <label for="banheiros">Número de banheiros</label>
+                  <label for="endereco">Endereço</label>
                   <input
-                    type="number"
+                    type="text"
                     class="form-control"
-                    id="banheiros"
-                    placeholder="1"
+                    id="endereco"
+                    placeholder="Rua Hype nº 123"
                   />
                 </div>
                  <div class="form-group">
-                  <label for="suites">Quantidade de suítes</label>
+                  <label for="cidade">Cidade</label>
                   <input
-                    type="number"
+                    type="text"
                     class="form-control"
-                    id="suites"
-                    placeholder="1"
+                    id="cidade"
+                    placeholder="Curitiba"
                   />
                 </div>
                 <div class="form-group">
-                  <label for="area">Área total em (m2)</label>
+                  <label for="cidade">Cidade</label>
                   <input
-                    type="number"
+                    type="text"
                     class="form-control"
-                    id="area"
-                    placeholder="45"
+                    id="cidade"
+                    placeholder="Curitiba"
                   />
                 </div>
                 <div class="form-group">
-                    <label for="exampleFormControlSelect1">Selecione o Prédio</label>
-                    <select class="form-control" id="exampleFormControlSelect1">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                    </select>
+                  <label for="estado">Estado</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="estado"
+                    placeholder="PR"
+                    maxlength="2"
+                  />
                 </div>
                 <br/>
                 <button type="submit" class="btn btn-primary">Criar</button>
@@ -78,7 +78,7 @@
         <div class="col-md">
           <div class="card">
             <div class="card-body">
-             <h6 class="text-secondary">Apartamentos disponíveis</h6>
+             <h6 class="text-secondary">Prédios disponíveis</h6>
               <table class="table">
                 <thead>
                   <tr>
@@ -89,23 +89,11 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
+                  <tr v-for = "predio of predios" :key="predio.id">
+                    <th scope="row">{{predio.nome}}</th>
+                    <td>{{predio.nome}}</td>
+                    <td>{{predio.estado}}</td>
+                    <td>{{predio.cidade}}</td>
                   </tr>
                 </tbody>
               </table>
@@ -120,11 +108,24 @@
 <script>
 import "bootstrap/dist/css/bootstrap.css";
 import "font-awesome/css/font-awesome.css";
+import Predio from '../services/predios.js'
 
 export default {
   name: "App",
-};
+  data(){
+    return{
+      predios: []
+    }
+  },
+  mounted() {
+    Predio.list().then(res => {
+      this.predios = res.data
+    })
+  }
+}
+
 </script>
+
 
 <style>
 #text-banner {
@@ -137,4 +138,3 @@ export default {
   padding-bottom: 30px;
 }
 </style>
-
