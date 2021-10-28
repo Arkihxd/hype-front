@@ -1,4 +1,5 @@
 <template>
+  <router-view></router-view>
   <div>
     <div id="text-banner" class="text-center">
       <h1>Desafio Hype <span class="fa fa-building"></span></h1>
@@ -109,7 +110,7 @@ import "font-awesome/css/font-awesome.css";
 import Predio from '../services/predios.js'
 
 export default {
-  name: "App",
+  name: "Predios",
   data(){
     return{
       predio: {

@@ -6,10 +6,11 @@ export default {
     },
 
     store:(apartamento) =>{
-        return http.put('apartamentos/create', apartamento);
+        return http.put(`apartamentos/create/${apartamento.predio_id}`, apartamento);
     },
 
     delete:(apartamento) =>{
         return http.delete(`apartamentos/delete/${apartamento.id}`);
     }
+
 }

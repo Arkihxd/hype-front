@@ -1,5 +1,8 @@
 <template>
   <div>
+  <router-view></router-view>
+  </div>
+  <div>
     <div id="text-banner" class="text-center">
       <h1>Desafio Hype <span class="fa fa-building"></span></h1>
       <br />
@@ -12,8 +15,8 @@
         <div class="col-md">
           <div class="card">
             <div class="card-body">
-            <h6 class="text-secondary">Cadastre um novo apartamento</h6>
-              <form>
+              <h6 class="text-secondary">Cadastre um novo apartamento</h6>
+              <form @submit.prevent="create">
                 <div class="form-group">
                   <label for="codigo">Código</label>
                   <input
@@ -21,33 +24,37 @@
                     class="form-control"
                     id="codigo"
                     placeholder="0021A"
+                    v-model="apartamento.codigo"
                   />
                 </div>
-                 <div class="form-group">
+                <div class="form-group">
                   <label for="quartos">Número de quartos</label>
                   <input
                     type="number"
                     class="form-control"
                     id="quartos"
                     placeholder="2"
+                    v-model="apartamento.quartos"
                   />
                 </div>
-                 <div class="form-group">
+                <div class="form-group">
                   <label for="banheiros">Número de banheiros</label>
                   <input
                     type="number"
                     class="form-control"
                     id="banheiros"
                     placeholder="1"
+                    v-model="apartamento.banheiros"
                   />
                 </div>
-                 <div class="form-group">
+                <div class="form-group">
                   <label for="suites">Quantidade de suítes</label>
                   <input
                     type="number"
                     class="form-control"
                     id="suites"
                     placeholder="1"
+                    v-model="apartamento.suites"
                   />
                 </div>
                 <div class="form-group">
@@ -57,19 +64,28 @@
                     class="form-control"
                     id="area"
                     placeholder="45"
+                    v-model="apartamento.area"
                   />
                 </div>
                 <div class="form-group">
-                    <label for="exampleFormControlSelect1">Selecione o Prédio</label>
-                    <select class="form-control" id="exampleFormControlSelect1">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                    </select>
+                  <label for="exampleFormControlSelect1"
+                    >Selecione o Prédio</label
+                  >
+                  <select
+                    v-model="apartamento.predio_id"
+                    class="form-control"
+                    id="exampleFormControlSelect1"
+                  >
+                    <option
+                      v-for="predio in predios"
+                      :key="predio.id"
+                      :value="predio.id"
+                    >
+                      {{ predio.nome }}
+                    </option>
+                  </select>
                 </div>
-                <br/>
+                <br />
                 <button type="submit" class="btn btn-primary">Criar</button>
               </form>
             </div>
@@ -78,34 +94,35 @@
         <div class="col-md">
           <div class="card">
             <div class="card-body">
-             <h6 class="text-secondary">Apartamentos disponíveis</h6>
+              <h6 class="text-secondary">Apartamentos disponíveis</h6>
               <table class="table">
                 <thead>
                   <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
+                    <th scope="col">Código</th>
+                    <th scope="col">Quartos</th>
+                    <th scope="col">Banheiros</th>
+                    <th scope="col">Suítes</th>
+                    <th scope="col">Área</th>
+                    <th scope="col">Prédio</th>
+                    <th scope="col">Excluir</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
+                  <tr v-for="apartamento of apartamentos" :key="apartamento.id">
+                    <th scope="row">{{ apartamento.codigo }}</th>
+                    <td>{{ apartamento.quartos }}</td>
+                    <td>{{ apartamento.banheiros }}</td>
+                    <td>{{ apartamento.suites }}</td>
+                    <td>{{ apartamento.area }}m<sup>2</sup></td>
+                    <td>{{ apartamento.predio_nome }}</td>
+                    <td>
+                      <button
+                        @click="deletar(apartamento)"
+                        class="btn btn-danger"
+                      >
+                        <i class="fa fa-trash"></i>
+                      </button>
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -120,9 +137,119 @@
 <script>
 import "bootstrap/dist/css/bootstrap.css";
 import "font-awesome/css/font-awesome.css";
+import Apartamentos from "../services/apartamentos.js";
+import Predio from "../services/predios.js";
 
 export default {
-  name: "App",
+  name: "Apartamentos",
+  data() {
+    return {
+      apartamento: {
+        codigo: "",
+        quartos: 0,
+        banheiros: 0,
+        suites: 0,
+        area: 0,
+        predio_id: 0,
+      },
+      apartamentos: [],
+      predios: [],
+      predios_nome: [],
+      errors: [],
+    };
+  },
+
+  mounted() {
+    this.index();
+    this.indexPredios();
+  },
+
+  methods: {
+    index() {
+       Apartamentos.index().then((res) => {
+        this.apartamentos = res.data;
+        var obj = this.apartamentos;
+        
+        for (var i in obj) {
+
+        /* this.predios_nome = Predio.show(obj[i].predio_id).then((res) => {
+            return res.data.nome
+        });
+
+        console.log(this.predios_nome)
+        Object.defineProperty(obj[i], "predio_nome", {
+            configurable: true,
+            value: this.predios_nome
+        }); */
+       
+        
+        /* Object.defineProperty(obj[i], 'aluno_nome', {
+            configurable: true,
+            value: Predio.show(obj[i].aluno_id).then((res) => {
+            return res.data.nome
+            })
+         }) */
+
+        Predio.show(obj[i].predio_id).then((res) => {
+            this.predios_nome = res.data
+        });
+        
+        
+
+
+          /*Object.defineProperty(obj[i], 'predio_nome', {
+            value: valor
+         })*/
+        }
+        console.log(this.predios_nome)
+        console.log(obj);
+      });
+    },
+
+    indexPredios() {
+      Predio.index().then((res) => {
+        this.predios = res.data;
+      });
+    },
+
+    create() {
+      Apartamentos.store(this.apartamento)
+        .then((res) => {
+          if (res.request.status == 200) {
+            alert(this.apartamento.codigo + " Criado com sucesso");
+          }
+          this.apartamento = {};
+          this.index();
+        })
+        .catch((err) => {
+          this.errors = err.response.data.errors;
+          alert("err.response.data.errors.join('\n')");
+        });
+    },
+
+    deletar(apartamento) {
+      if (confirm(`Deseja realmente deletar ${apartamento.codigo}?`)) {
+        Apartamentos.delete(apartamento)
+          .then((res) => {
+            if (res.request.status == 200) {
+              alert(this.apartamento.codigo + " Apagado com sucesso");
+            }
+            this.index();
+            this.errors = [];
+          })
+          .catch((err) => {
+            this.errors = err.response.data.errors;
+            alert("err.response.data.errors.join('\n')");
+          });
+      }
+    },
+
+    showPredio(predio_id) {
+      Predio.show(predio_id).then((res) => {
+        this.predios_nome = res.data.nome;
+      });
+    },
+  },
 };
 </script>
 
@@ -137,4 +264,3 @@ export default {
   padding-bottom: 30px;
 }
 </style>
-

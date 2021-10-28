@@ -11,5 +11,9 @@ export default {
 
     delete:(predio) =>{
         return http.delete(`predios/delete/${predio.id}`);
+    },
+
+    show:(predio_id) =>{
+        return http.get(`predios/${predio_id}`);
     }
 }
