@@ -8,7 +8,7 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <title><%= htmlWebpackPlugin.options.title %></title>
+    <title>Desafio Hype</title>
   </head>
   <body>
     <noscript>
@@ -18,14 +18,14 @@
     <nav class="navbar navbar-light navbar-expand-md bg-light justify-content-md-center justify-content-start">
       <div class="navbar-collapse collapse justify-content-between align-items-center w-100" id="collapsingNavbar2">
           <ul class="navbar-nav mx-auto text-md-center text-left">
-              <li class="nav-item">
-                  <a class="nav-link" href="/predios">Predios</a> 
+              <li class="nav-item navli">
+                  <a class="nav-link h3" href="/predios">Predios</a> 
               </li>
-              <li class="nav-item my-auto">
-                  <a class="nav-link navbar-brand mx-0 d-none d-md-inline" href="/">Inicio</a>
+              <li class="nav-item my-auto navli">
+                  <a class="nav-link mx-0 d-none d-md-inline" href="/"><strong class="h1">Início</strong></a>
               </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="/apartamentos">Apartamentos</a> 
+              <li class="nav-item navli">
+                  <a class="nav-link h3" href="/apartamentos">Apartamentos</a> 
               </li>
           </ul>
       </div>
@@ -40,3 +40,9 @@
     </div>
   </footer>
 </html>
+
+<style>
+  .navli{
+    margin: 5px 20px 5px 25px;
+  }
+</style>

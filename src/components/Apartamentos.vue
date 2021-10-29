@@ -115,9 +115,11 @@
                     <td>{{ apartamento.suites }}</td>
                     <td>{{ apartamento.area }}m<sup>2</sup></td>
                     <td>
-                      <a v-bind:href="'/predio/' + apartamento.Predio.id">{{
-                        apartamento.Predio.nome
-                      }}</a>
+                      <li class="list-group-item">
+                        <a v-bind:href="'/predio/' + apartamento.Predio.id">{{
+                          apartamento.Predio.nome
+                        }}</a>
+                      </li>
                     </td>
                     <td>
                       <button
@@ -177,11 +179,10 @@ export default {
   },
 
   methods: {
-
-    apartamentoCard(){
-      this.$emit('add-card',{
-          predio: this.apartamento.Predio
-      }) 
+    apartamentoCard() {
+      this.$emit("add-card", {
+        predio: this.apartamento.Predio,
+      });
     },
 
     index() {
@@ -197,18 +198,29 @@ export default {
     },
 
     create() {
-      Apartamentos.store(this.apartamento)
-        .then((res) => {
-          if (res.request.status == 200) {
-            alert(this.apartamento.codigo + " Criado com sucesso");
-          }
-          this.apartamento = {};
-          this.index();
-        })
-        .catch((err) => {
-          this.errors = err.response.data.errors;
-          alert("err.response.data.errors.join('\n')");
-        });
+      if (
+        this.apartamento.codigo == "" ||
+        this.apartamento.quartos <= 0 ||
+        this.apartamento.banheiros <= 0 ||
+        this.apartamento.suites <= 0 ||
+        this.apartamento.area <= 0 ||
+        this.apartamento.predio_id == 0
+      ) {
+        alert("Campos em branco ou invalidos, verifique e tente novamente.");
+      } else {
+        Apartamentos.store(this.apartamento)
+          .then((res) => {
+            if (res.request.status == 200) {
+              alert(this.apartamento.codigo + " Criado com sucesso");
+            }
+            this.apartamento = {};
+            this.index();
+          })
+          .catch((err) => {
+            this.errors = err.response.data.errors;
+            alert("Erro: " + err.response.data.errors);
+          });
+      }
     },
 
     deletar(apartamento) {
@@ -223,7 +235,7 @@ export default {
           })
           .catch((err) => {
             this.errors = err.response.data.errors;
-            alert("err.response.data.errors.join('\n')");
+            alert("Erro: " + err.response.data.errors);
           });
       }
     },
@@ -247,14 +259,15 @@ export default {
   padding-top: 30px;
   padding-bottom: 30px;
 }
-a{
+a {
   color: inherit;
   text-decoration: none;
 }
-label{
-  margin-top: 10px
+label {
+  margin-top: 10px;
 }
-td, th {
+td,
+th {
   text-align: center;
 }
 </style>

@@ -35,8 +35,7 @@
               <ul
                 class="list-group-item text-center"
                 v-for="predio of predio.apartamentos"
-                :key="predio.id"
-              >
+                :key="predio.id">
                 <li class="list-group-item">
                   <a v-bind:href="'/apartamento/' + predio.id">{{
                     predio.codigo
