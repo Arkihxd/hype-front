@@ -1,6 +1,6 @@
 <template>
   <div>
-  <router-view></router-view>
+    <router-view></router-view>
   </div>
   <div>
     <div id="text-banner" class="text-center">
@@ -58,7 +58,7 @@
                   />
                 </div>
                 <div class="form-group">
-                  <label for="area">Área total em (m2)</label>
+                  <label for="area">Área total em m<sup>2</sup></label>
                   <input
                     type="number"
                     class="form-control"
@@ -114,7 +114,11 @@
                     <td>{{ apartamento.banheiros }}</td>
                     <td>{{ apartamento.suites }}</td>
                     <td>{{ apartamento.area }}m<sup>2</sup></td>
-                    <td>{{ apartamento.predio_nome }}</td>
+                    <td>
+                      <a v-bind:href="'/predio/' + apartamento.Predio.id">{{
+                        apartamento.Predio.nome
+                      }}</a>
+                    </td>
                     <td>
                       <button
                         @click="deletar(apartamento)"
@@ -139,6 +143,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import "font-awesome/css/font-awesome.css";
 import Apartamentos from "../services/apartamentos.js";
 import Predio from "../services/predios.js";
+//import ApartamentoCard from "./ApartamentoCard"
 
 export default {
   name: "Apartamentos",
@@ -151,10 +156,17 @@ export default {
         suites: 0,
         area: 0,
         predio_id: 0,
+        Predio: {
+          id: 0,
+          nome: "",
+          sigla: "",
+          endereco: "",
+          cidade: "",
+          estado: "",
+        },
       },
       apartamentos: [],
       predios: [],
-      predios_nome: [],
       errors: [],
     };
   },
@@ -165,44 +177,16 @@ export default {
   },
 
   methods: {
+
+    apartamentoCard(){
+      this.$emit('add-card',{
+          predio: this.apartamento.Predio
+      }) 
+    },
+
     index() {
-       Apartamentos.index().then((res) => {
+      Apartamentos.index().then((res) => {
         this.apartamentos = res.data;
-        var obj = this.apartamentos;
-        
-        for (var i in obj) {
-
-        /* this.predios_nome = Predio.show(obj[i].predio_id).then((res) => {
-            return res.data.nome
-        });
-
-        console.log(this.predios_nome)
-        Object.defineProperty(obj[i], "predio_nome", {
-            configurable: true,
-            value: this.predios_nome
-        }); */
-       
-        
-        /* Object.defineProperty(obj[i], 'aluno_nome', {
-            configurable: true,
-            value: Predio.show(obj[i].aluno_id).then((res) => {
-            return res.data.nome
-            })
-         }) */
-
-        Predio.show(obj[i].predio_id).then((res) => {
-            this.predios_nome = res.data
-        });
-        
-        
-
-
-          /*Object.defineProperty(obj[i], 'predio_nome', {
-            value: valor
-         })*/
-        }
-        console.log(this.predios_nome)
-        console.log(obj);
       });
     },
 
@@ -245,8 +229,8 @@ export default {
     },
 
     showPredio(predio_id) {
-      Predio.show(predio_id).then((res) => {
-        this.predios_nome = res.data.nome;
+      return Predio.show(predio_id).then((res) => {
+        res.data.nome;
       });
     },
   },
@@ -262,5 +246,15 @@ export default {
   background-color: #f1f1f1;
   padding-top: 30px;
   padding-bottom: 30px;
+}
+a{
+  color: inherit;
+  text-decoration: none;
+}
+label{
+  margin-top: 10px
+}
+td, th {
+  text-align: center;
 }
 </style>

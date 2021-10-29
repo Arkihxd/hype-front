@@ -5,9 +5,18 @@ import {createRouter, createWebHistory} from 'vue-router';
 
 import Predios from '../components/Predios.vue'
 import Apartamentos from '../components/Apartamentos.vue'
-import Hello from '../components/HelloWorld.vue'
+import ApartamentoCard from '../components/ApartamentoCard.vue'
+import PredioCard from '../components/PredioCard.vue'
+import Home from '../components/Home.vue'
+import NotFound from '../components/NotFound.vue'
+
 
 const routes = [
+    {
+        path: '/',
+        name: 'Home',
+        component: Home,
+    },
     {
         path: '/predios',
         name: 'predios',
@@ -20,8 +29,16 @@ const routes = [
     },
     {
         path: '/:pathMatch(.*)*',
-        component: Hello,
+        component: NotFound,
     },
+    {
+        path: '/apartamento/:id',
+        component: ApartamentoCard,
+    },
+    {
+        path: '/predio/:id',
+        component: PredioCard,
+    }
 ];
 
 const router = new createRouter({
