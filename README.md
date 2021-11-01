@@ -1,5 +1,13 @@
 # front
 
+## Technologies
+
+```
+Vue.js
+Bootstrap
+Font-Awesome
+```
+
 ## Project setup
 ```
 yarn install
@@ -7,7 +15,7 @@ yarn install
 
 ### Compiles and hot-reloads for development
 ```
-yarn serve
+yarn hype
 ```
 
 ### Compiles and minifies for production
