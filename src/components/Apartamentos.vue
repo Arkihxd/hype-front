@@ -64,6 +64,7 @@
                     class="form-control"
                     id="area"
                     placeholder="45"
+                    step="0.01"
                     v-model="apartamento.area"
                   />
                 </div>
@@ -145,7 +146,6 @@ import "bootstrap/dist/css/bootstrap.css";
 import "font-awesome/css/font-awesome.css";
 import Apartamentos from "../services/apartamentos.js";
 import Predio from "../services/predios.js";
-//import ApartamentoCard from "./ApartamentoCard"
 
 export default {
   name: "Apartamentos",
